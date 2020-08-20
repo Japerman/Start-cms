@@ -1,0 +1,27 @@
+#!usr/bin/env php
+<?php
+/**
+ * start - a simple framework for PHP Developers
+ *
+ * @author   Jose Perez <japerman@gmail.com>
+ * @license  The MIT License (MIT) - <http://opensource.org/licenses/MIT>
+ */
+
+require __DIR__.'/vendor/autoload.php';
+
+use Start\Kernel\Application;
+use App\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Application as SymfonyApplication;
+
+$app = new Application;
+
+define('START_VERSION', $app->version());
+define('ROOT', $app->root());
+define('DOC_ROOT', $app->docRoot());
+define('BASE_FOLDER', $app->baseFolder());
+define('APP_ENV', strtolower(config('app.env')));
+date_default_timezone_set(config('app.timezone'));
+
+$console = new ConsoleApplication(new SymfonyApplication("    START v" . START_VERSION . "
+  start - Simple PHP Framework"), $app);
+$console->run();
